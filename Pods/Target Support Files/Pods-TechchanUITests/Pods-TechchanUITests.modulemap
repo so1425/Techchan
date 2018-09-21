@@ -1,0 +1,6 @@
+framework module Pods_TechchanUITests {
+  umbrella header "Pods-TechchanUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
