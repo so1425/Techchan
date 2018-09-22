@@ -17,6 +17,7 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
 
     var receiveTextField: String!
     var dbRef: DatabaseReference!
+    var added: Bool!
     var postArray = [String]()
 
     override func viewDidLoad() {
@@ -34,7 +35,16 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
         
         postArray = []
         
-        dbRef = Database.database().reference()
+        self.dbRef = Database.database().reference()
+        
+        let user = self.dbRef.child("user/01")
+        user.observe(.value) { (snapshot: DataSnapshot) in
+            if snapshot.hasChild("post") {
+                self.added = true
+            } else {
+                self.added = false
+            }
+        }
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -77,10 +87,11 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
             present(alert, animated: true, completion: nil)
             
         } else {
-            let post = ["post": postTextField.text!]
-            let username = ["username": nameLabel.text!]
-            dbRef.child("user/01").setValue(post)
-            dbRef.child("user/01").setValue(username)
+            let post = ["post": self.postTextField.text!]
+            let username = ["username": self.nameLabel.text!]
+            self.dbRef.child("user/01").setValue(post)
+            self.dbRef.child("user/01/username").setValue(username)
+            
         }
     }
     
