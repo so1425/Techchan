@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>274232631206-03gtchabsqrlld0ma2b4vf7t4jdiabav.apps.googleusercontent.com</string>
+	<string>756947502149-i9ddcekj669742oaouef5j3i83q2931q.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.274232631206-03gtchabsqrlld0ma2b4vf7t4jdiabav</string>
+	<string>com.googleusercontent.apps.756947502149-i9ddcekj669742oaouef5j3i83q2931q</string>
 	<key>API_KEY</key>
-	<string>AIzaSyACsSFvlj_p6fxa5I5Ti12GNXAxCi-PE3A</string>
+	<string>AIzaSyBYjLCwGSU4hw8INY1VlM0FDjeThN3U66E</string>
 	<key>GCM_SENDER_ID</key>
-	<string>274232631206</string>
+	<string>756947502149</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.litech.Techchan</string>
 	<key>PROJECT_ID</key>
-	<string>techchan-29f29</string>
+	<string>techchan-473f1</string>
 	<key>STORAGE_BUCKET</key>
-	<string>techchan-29f29.appspot.com</string>
+	<string>techchan-473f1.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:274232631206:ios:1db05293a1c9a22a</string>
+	<string>1:756947502149:ios:1db05293a1c9a22a</string>
 	<key>DATABASE_URL</key>
-	<string>https://techchan-29f29.firebaseio.com</string>
+	<string>https://techchan-473f1.firebaseio.com</string>
 </dict>
 </plist>

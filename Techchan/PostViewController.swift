@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 
-class PostViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource {
+class PostViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var postTextField: UITextField!
@@ -19,6 +20,7 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
     var dbRef: DatabaseReference!
     var added: Bool!
     var postArray = [String]()
+    var userIdArray = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +35,15 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
         
         table.dataSource = self
         
+        table.delegate = self
+        
         postArray = []
+        
+        userIdArray = []
         
         self.dbRef = Database.database().reference()
         
-        let user = self.dbRef.child("user/01")
+        let user = self.dbRef.child("postID")
         user.observe(.value) { (snapshot: DataSnapshot) in
             if snapshot.hasChild("post") {
                 self.added = true
@@ -45,6 +51,13 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
                 self.added = false
             }
         }
+        
+        let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
+        table.register(nib, forCellReuseIdentifier: "cell")
+        
+        postTextField.placeholder = "whats going on?"
+        
+        update()
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -59,11 +72,26 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath as IndexPath) as! PostTableViewCell
         
-        cell?.textLabel?.text = postArray[indexPath.row]
+        cell.name.text = userIdArray[indexPath.row]
+        cell.post.text = postArray[indexPath.row]
         
-        return cell!
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("\(postArray[indexPath.row])が選ばれました")
+    }
+    
+    //更新ボタンの実装
+    func update(){
+        self.dbRef?.child("postID").observe(.childAdded, with: { [weak self](snapshot) -> Void in
+            self?.userIdArray.append(String(describing: snapshot.childSnapshot(forPath: "username").value!))
+            self?.postArray.append(String(describing: snapshot.childSnapshot(forPath: "post").value!))
+            //ここでtableviewなどの更新を行う
+            self?.table.reloadData()
+        })
     }
     
     @IBAction func back() {
@@ -87,14 +115,12 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
             present(alert, animated: true, completion: nil)
             
         } else {
-            let post = ["post": self.postTextField.text!]
-            let username = ["username": self.nameLabel.text!]
-            self.dbRef.child("user/01").setValue(post)
-            self.dbRef.child("user/01/username").setValue(username)
+        self.dbRef.child("postID").childByAutoId().setValue(["username": self.nameLabel.text,"post": self.postTextField.text])
+            
+        
             
         }
     }
-    
 
     /*
     // MARK: - Navigation
@@ -105,5 +131,7 @@ class PostViewController: UIViewController, UITextFieldDelegate, UITableViewData
         // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
+
+

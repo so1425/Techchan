@@ -6,6 +6,7 @@ target 'Techchan' do
   use_frameworks!
 
   # Pods for Techchan
+  pod 'Firebase/Core'
   pod ‘Firebase/Database’
 
   target 'TechchanTests' do
